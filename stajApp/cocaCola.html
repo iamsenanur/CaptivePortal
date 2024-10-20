@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cocaCola</title>
+    <link rel="stylesheet" href="main.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+        body {
+          background-color: #f3f1ec; /* Açık mavi arka plan rengi */
+          margin: 0;
+          padding: 0;
+          font-size: 17px; /* Temel yazı boyutunu daha küçük yap */
+        }
+        
+        .row {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        
+        .container {
+          background: white;
+          border-radius: 20px; /* Kenarları yuvarlatmak için */
+          margin-top: 55px; /* Üst boşluk */
+          margin-bottom: 55px; /* Alt boşluk */
+          height: 600px;
+        }
+        
+        .form-container {
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          height: 600px;
+        }
+        
+        .form-control,
+        .form-select {
+          border: none;
+          border-bottom: 2px solid #ccc;
+          border-radius: 0;
+          box-shadow: none;
+          padding: 0.375rem 0.75rem;
+          background-color: transparent;
+          color: #495057;
+          font-size: 0.75rem; /* Küçük input metinleri */
+        }
+        
+        .form-control:hover,
+        .form-select:hover {
+          border-color: red !important;
+          box-shadow: 0 0 0 0.2rem #ccc !important;
+          transition: all 0.3s ease;
+        }
+        
+        .form-control:focus,
+        .form-select:focus {
+          border-bottom: 2px solid red;
+          outline: none;
+          background-color: transparent;
+        }
+        
+        .btn-link {
+          color: black;
+          font-size: 0.800rem!important; 
+        }
+        
+        .btn-link:hover {
+          color: red;
+        }
+        
+        .modal-body p {
+          margin: 0;
+          margin-top: 10px;
+          font-size: 0.625rem; /* Daha küçük bilgilendirme metinleri */
+        }
+        
+        .form-check-input:checked {
+          background-color: red;
+          border-color: red;
+        }
+        
+        .img-logo {
+          max-width: 200px;
+          max-height: 100px;
+          object-fit: contain;
+        }
+        
+        .col-lg-6 {
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          height: 600px;
+        }
+        
+        .d-flex {
+          display: flex;
+          align-items: center;
+        }
+        
+        .logo-container {
+          flex-grow: 1;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .language-select-container {
+          margin-left: auto;
+        }
+        
+        .img-fluid {
+          border-top-left-radius: 20px; /* Sol üst köşeye yarıçap */
+          border-bottom-left-radius: 20px; /* Sol alt köşeye yarıçap */
+        }
+        
+        @media (max-width: 989px) {
+          .img-fluid {
+            border-radius: 0; /* Border'ı kaldırır */
+          }
+        }
+        
+        /* Başlık ve metinlerin yazı boyutlarını küçültmek için */
+        h2 {
+          font-size: 1rem; /* Daha küçük başlık */
+          color: #8b97a1;
+        }
+        
+        h6 {
+          font-size: 0.800rem; /* Daha küçük başlık */
+          color: #ccc;
+        }
+        
+        /* Modal ve aydınlanma metni için yazı boyutunu ayarlamak için */
+        #dataProcessingInfo, .modal-body p, .form-check-label{
+          font-size: 0.650rem!important; /* Daha küçük bilgilendirme metinleri */
+        }
+        #existingAccountText1, #existingAccountText2{
+            font-size: 0.750rem!important;
+        }
+        
+        .btn {
+          font-size: 0.900rem; /* Daha küçük buton yazı boyutu */
+        }
+      </style>
+      
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 position-relative">
+          <img
+            src="./photo/coca-cola-4090021_1280.jpg"
+            alt="dosya bulunamadı"
+            class="img-fluid h-100 w-100"
+          />
+        </div>
+        <div class="col-lg-6">
+          <div
+            class="d-flex justify-content-between align-items-center mt-3 me-3"
+          >
+            <div class="logo-container">
+              <img src="photo/Coca-Cola_logo.svg.png" alt="Logo" class="img-logo" />
+            </div>
+            <div class="language-select-container">
+              <select class="form-select" id="languageSelect">
+                <option value="0">Dil</option>
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="ar">عربي</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Kayıt Ol/1.form -->
+          <div class="form-container" id="form1-container">
+            <form action="#" id="form1" class="w-75">
+              <h2 id="hesapOlustur" style="color: #8b97a1" class="text left mt-1">Hesap Oluştur
+              </h2>
+              <h6 id="hg" style="color: #ccc">Aramıza hoşgeldin!</h6>
+              <!--   Ad ve Soyad inputu yan yana iken html' i <div class="row mb-3">
+                <div class="col-6">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      placeholder="Ad"
+                      class="form-control"
+                      id="name"
+                    />
+                    <label for="name">Ad</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="surname"
+                      placeholder="Soyad"
+                    />
+                    <label for="surname">Soyad</label>
+                  </div>
+                </div>
+              </div> -->
+              <div class="my-2">
+                <input
+                  type="text"
+                  placeholder="Ad"
+                  class="form-control"
+                  id="name"
+                  required
+                />
+                
+
+              </div>
+              <div class="mb-2">
+                <input
+                  type="text"
+                  placeholder="Soyad"
+                  class="form-control"
+                  id="surname"
+                  required
+                />
+              </div>
+              <div class="mb-2">
+                <input
+                  type="tel"
+                  placeholder="Telefon Numarası"
+                  class="form-control"
+                  id="phoneNumber1"
+                  required
+                />
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <!---->
+                  <div class="form-floating">
+                    <select class="form-select" id="floatingSelectGrid">
+                      <option  value="0">Cinsiyet</option>
+                      <option value="1">Kadın</option>
+                      <option  value="2">Erkek</option>
+                      <option  value="3">Belirtmek istemiyorum</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="birthyear"
+                      placeholder="Doğum Yılı"
+                      onfocus="tarihyap()"
+                      required
+                    />
+                    <!--<label for="birthyear">Doğum Yılı</label>-->
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="key"
+                  name="key"
+                  placeholder="Anahtar"
+                  required
+                />
+              </div>
+              <div class="mb-2">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password1"
+                  placeholder="Şifre"
+                  required
+                />
+              </div>
+              <div class="my-2">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password2"
+                  placeholder="Şifre Tekrar"
+                  required
+                />
+              </div>
+              <!-- Enlightenment Text start -->
+              <div class="modal-body">
+                <p  id="dataProcessingInfo" class="fs-6 fs-md-5 fs-lg-4" style="color: #999"  >
+                  Kablosuz ağ bağlantısı hizmeti kapsamındaki kişisel veri
+                  işleme faaliyetleri hakkında detaylı bilgi için
+                  <a
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    title="Tooltip"
+                    class="btn btn-link"
+                    >Aydınlanma Metnimizi</a
+                   
+                  >
+                  inceleyebilirsiniz.
+                </p>
+              </div>
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 id="modal1Header" class="modal-title fs-5" id="staticBackdropLabel">
+                        Aydınlanma Metni
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        id="modalButtonClose"
+
+                      >
+                        Kapat
+                      </button>
+                      <button
+                      id="modalButtonUnderstand"
+                      type="button" class="btn btn-success">
+                        Anladım
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Enlightenment Text end -->
+              <!-- Check start -->
+              <br />
+
+              <!--kayıt olmak için kvkk' nın kabul edilmesi lazım-->
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                />
+                <label
+                  class="form-check-label fs-6 fs-md-5 fs-lg-4"
+                  for="flexCheckDefault"
+                  style="color: #8b97a1"
+                  id="agreementLabel"
+                >
+                  <strong style="color: darkslategrey" id="termsOfUse"
+                    >Kullanım Sözleşmesi</strong
+                  >
+                  ve
+                  <strong style="color: darkslategrey" id="consentText"
+                    >KVKK Açık Rıza Metni</strong
+                  >
+                  ni okudum kabul ediyorum.
+                </label>
+              </div>
+              <!-- Check end -->
+              <button id="registerButton1" type="submit" class="btn btn-danger w-100">
+                Kayıt Ol
+              </button>
+              <div id="error-message" style="color: red; display: none;">Lütfen Kullanım Sözleşmesi ve KVKK Açık Rıza Metni'ni kabul edin.</div>
+
+              <div class="d-flex align-items-center me-md-4 mb-md-0">
+                <span id="existingAccountText1" class="fs-6 me-1">Zaten bir hesabınız var mı?</span>
+                <button
+                  class="btn btn-link text-decoration-none fw-bold"
+                  id="signIn"
+                >
+                  Giriş Yap
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- Giriş Yap/2.form -->
+          <div class="form-container d-none" id="form2-container">
+            <form action="#" id="form2" class="w-75">
+              <h2 id="girisYap" class="text left mt-1" style="color: #8b97a1">
+                Giriş Yap
+              </h2>
+              <h6 id="ahg" style="color: #ccc">Seni tekrar görmek güzel!</h6>
+              <div class="my-2">
+                <input
+                  type="tel"
+                  placeholder="Telefon Numarası"
+                  class="form-control"
+                  required
+                  id="phoneNumber2"
+                />
+              </div>
+              <div class="mb-2">
+                <input
+                  type="password"
+                  placeholder="Şifre"
+                  class="form-control"
+                  id="password3"
+                  required
+                />
+              </div>
+              <div
+                class="d-flex justify-content-between align-items-center mb-3"
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="rememberMe"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="rememberMe"
+                    style="color: #8b97a1"
+                    id="rememberMeLabel"
+                    >Beni Hatırla</label
+                  >
+                </div>
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#forgotPasswordModal"
+                  class="btn btn-link"
+                  id="forgotPasswordLink"
+                  >Şifremi Unuttum?</a
+                >
+              </div>
+              <button id="registerButton2" type="submit" class="btn btn-danger w-100">
+                İnternete Bağlan
+              </button>
+              <div class="d-flex align-items-center me-md-4 mb-md-0">
+                <span id="existingAccountText2" class="fs-6 me-2">Henüz bir hesabınız yok mu?</span>
+                <button
+                  class="btn btn-link text-decoration-none fw-bold"
+                  id="signUp"
+                >
+                  Hesap Oluştur
+                </button>
+              </div>
+              <!-- Şifremi Unuttum Modal -->
+              <div
+                class="modal fade"
+                id="forgotPasswordModal"
+                tabindex="-1"
+                aria-labelledby="forgotPasswordModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5  class="modal-title" id="forgotPasswordModalLabel">
+                        Şifremi Unuttum
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="#" method="POST">
+                        <div class="mb-3">
+                          <label for="emailInput" class="form-label"
+                            >E-posta Adresiniz</label
+                          >
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="emailInput"
+                            placeholder="E-posta adresinizi girin"
+                            required
+                          />
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                          Gönder
+                        </button>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Kapat
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+ 
+
+//kvkk onay başla
+document.getElementById('form1').addEventListener('submit', function(event) {
+  var checkBox = document.getElementById('flexCheckDefault');
+  var errorMessage = document.getElementById('error-message');
+
+  if (!checkBox.checked) {
+    event.preventDefault();
+    errorMessage.style.display = 'block';
+  } else {
+    errorMessage.style.display = 'none';
+  }
+});
+
+//kvkk onay bitiş
+          //Form1 ve form2 yi kaydırma js' i
+          document.getElementById("signIn").addEventListener("click", () => {
+            document.getElementById("form1-container").classList.add("d-none");
+            document.getElementById("form2-container").classList.remove("d-none");
+          });
+          document.getElementById("signUp").addEventListener("click", () => {
+            document.getElementById("form2-container").classList.add("d-none");
+            document.getElementById("form1-container").classList.remove("d-none");
+          });
+
+          //Doğum Yılı placeholder' ı göstermek için js
+          function tarihyap() {
+            var dg = document.getElementById("birthyear");
+            dg.type = "date";
+          }
+
+          //Şifre ve şifre tekrarının aynı olup olmadığını sorgulamak
+          document
+            .getElementById("form1")
+            .addEventListener("submit", function (event) {
+              const password1 = document.getElementById("password1").value;
+              const password2 = document.getElementById("password2").value;
+
+              // Şifrelerin eşleşip eşleşmediğini kontrol et
+              if (password1 !== password2) {
+                alert("Şifreler eşleşmiyor. Lütfen tekrar deneyin.");
+                event.preventDefault(); // Formun gönderilmesini engelle
+                return;
+              }
+
+              // Şifrenin güçlü olup olmadığını kontrol et
+              const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/; // En az 6 karakter, büyük harf ve rakam içermeli
+              if (!passwordRegex.test(password1)) {
+                alert(
+                  "Şifre en az 6 karakter uzunluğunda olmalı, büyük harf ve rakam içermelidir."
+                );
+                event.preventDefault(); // Formun gönderilmesini engelle
+                return;
+              }
+
+              // Şifrelerin ve diğer alanların doğruluğunu kontrol ettikten sonra form gönderilir
+            });
+
+
+            //Dil Değiştirme js' i
+
+
+            
+            document.getElementById("languageSelect").addEventListener("change", function () {
+      const selectedLanguage = this.value;
+
+
+      switch (selectedLanguage) {
+        case "tr": 
+        //tr icerikler
+       
+         //giris basla
+        document.getElementById("hesapOlustur").textContent = "Hesap Oluştur";
+        document.getElementById("hg").textContent = "Aramıza hoşgeldin!";
+        //giris bitis
+        //hesap olustur ekranı basla
+        document.getElementById("name").placeholder = "Ad";
+        document.getElementById("surname").placeholder = "Soyad";
+        document.getElementById("phoneNumber1").placeholder = "Telefon Numarası";
+        document.getElementById("floatingSelectGrid").options[0].textContent = "Cinsiyet";
+        document.getElementById("floatingSelectGrid").options[1].textContent = "Kadın";
+        document.getElementById("floatingSelectGrid").options[2].textContent = "Erkek";
+        document.getElementById("floatingSelectGrid").options[3].textContent = "Belirtmek İstemiyorum";
+        document.getElementById("key").placeholder = "Anahtar";
+        document.getElementById("password1").placeholder = "Şifre";
+        document.getElementById("password2").placeholder = "Şifre Tekrar";
+        document.getElementById("dataProcessingInfo").innerHTML = `
+        Kablosuz ağ bağlantısı hizmeti kapsamındaki kişisel veri
+        işleme faaliyetleri hakkında detaylı bilgi için
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          title="Tooltip"
+          class="btn btn-link"
+        >Aydınlanma Metnimizi</a>
+        inceleyebilirsiniz.
+      `;
+      document.getElementById("modal1Header").textContent = "Aydınlanma Metni";
+      document.getElementById('modalButtonClose').textContent = 'Kapat';
+      document.getElementById('modalButtonUnderstand').textContent = 'Anladım';
+
+
+
+      document.getElementById('termsOfUse').textContent = 'Kullanım Sözleşmesi';
+      document.getElementById('consentText').textContent = 'KVKK Açık Rıza Metni';
+      document.getElementById('agreementLabel').childNodes[2].textContent = ' ve ';
+      document.getElementById('agreementLabel').childNodes[4].textContent = ' ni okudum kabul ediyorum.';
+      document.getElementById('error-message').textContent = 'Lütfen Kullanım Sözleşmesi ve KVKK Açık Rıza Metni\'ni kabul edin.'; // Default to Turkish
+
+      
+      document.getElementById('registerButton1').textContent = 'Kayıt Ol';
+      document.getElementById('existingAccountText1').textContent = 'Zaten bir hesabınız var mı?';
+      document.getElementById('signIn').textContent = 'Giriş Yap';
+        // hesap oluştur ekranı bitiş
+        //giriş yap ekranı başla
+        document.getElementById("girisYap").textContent = "Giriş Yap";
+        document.getElementById("ahg").textContent = "Seni tekrar görmek güzel!";
+        document.getElementById("phoneNumber2").placeholder = "Telefon Numarası";
+        document.getElementById("password3").placeholder = "Şifre";
+
+        document.getElementById('registerButton2').textContent = 'İnternete Bağlan';
+      document.getElementById('existingAccountText2').textContent = 'Henüz bir hesabınız yok mu?';
+      document.getElementById('signUp').textContent = 'Hesap Oluştur';
+
+      document.getElementById('rememberMeLabel').textContent = 'Beni Hatırla';
+      document.getElementById('forgotPasswordLink').textContent = 'Şifremi Unuttum?';
+
+        //giriş yap ekranı bitiş
+
+       
+
+        break;
+
+        case "en":  
+        //English contents
+        //start main
+
+        document.getElementById("hesapOlustur").textContent = "Create Account";
+        document.getElementById("hg").textContent = "Welcome to the club!";
+//finish main
+//start register page
+
+        document.getElementById("name").placeholder = "Name";
+        document.getElementById("surname").placeholder = "Surname";
+        document.getElementById("phoneNumber1").placeholder = "Phone Number";
+        document.getElementById("floatingSelectGrid").options[0].textContent = "Gender";
+        document.getElementById("floatingSelectGrid").options[1].textContent = "Woman";
+        document.getElementById("floatingSelectGrid").options[2].textContent = "Male";
+        document.getElementById("floatingSelectGrid").options[3].textContent = "I Don't Want To Specify";
+        document.getElementById("key").placeholder = "Key";
+        document.getElementById("password1").placeholder = "Password";
+        document.getElementById("password2").placeholder = "Password Repeat";
+        document.getElementById("dataProcessingInfo").innerHTML = `
+        For detailed information on personal data processing activities
+        within the scope of wireless network connection services,
+        please refer to our
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          title="Tooltip"
+          class="btn btn-link"
+          >Enlightenment Text</a>
+        .
+      `;
+      document.getElementById("modal1Header").textContent = "The Enlightenment Text";
+      document.getElementById('modalButtonClose').textContent = 'Close';
+      document.getElementById('modalButtonUnderstand').textContent = 'I understand';
+
+
+      document.getElementById('termsOfUse').textContent = 'Terms of use';
+      document.getElementById('consentText').textContent = 'KVKK Explicit Consent Text';
+      document.getElementById('agreementLabel').childNodes[2].textContent = ' and';
+      document.getElementById('agreementLabel').childNodes[4].textContent = ' I have read and agree.';
+      document.getElementById('error-message').textContent = 'Please accept the Terms of Use and the GDPR Consent Form.';
+
+
+      document.getElementById('registerButton1').textContent = 'Check in';
+      document.getElementById('existingAccountText1').textContent = 'Do you already have an account?';
+      document.getElementById('signIn').textContent = 'Log in';
+      //finish register page
+//start login page
+
+      document.getElementById("girisYap").textContent = "Login";
+        document.getElementById("ahg").textContent = "Nice to see you again!";
+        document.getElementById("phoneNumber2").placeholder = "Phone number";
+        document.getElementById("password3").placeholder = "Password";
+
+        document.getElementById('registerButton2').textContent = 'Connect to the Internet';
+      document.getElementById('existingAccountText2').textContent = 'Do not you have an account yet?';
+      document.getElementById('signUp').textContent = 'Create an account';
+      document.getElementById('rememberMeLabel').textContent = 'Remember Me';
+      document.getElementById('forgotPasswordLink').textContent = 'Forgot Password?';
+
+
+        //finish login page
+
+
+
+        break; 
+        
+        case "es":
+            //contenido en español
+            //inicio de la sección principal
+        document.getElementById("hesapOlustur").textContent = "Crear Una Cuenta";
+        document.getElementById("hg").textContent = "Bienvenido al club!";
+//final de la parte principal
+        //inicio de página de registro
+        document.getElementById("name").placeholder = "Nombre";
+        document.getElementById("surname").placeholder = "Apellido";
+        document.getElementById("phoneNumber1").placeholder = "Número de teléfono";
+        document.getElementById("floatingSelectGrid").options[0].textContent = "Género";
+        document.getElementById("floatingSelectGrid").options[1].textContent = "Mujer";
+        document.getElementById("floatingSelectGrid").options[2].textContent = "Masculino";
+        document.getElementById("floatingSelectGrid").options[3].textContent = "No Quiero Especificar";
+        document.getElementById("key").placeholder = "Llave";
+        document.getElementById("password1").placeholder = "Contraseña";
+        document.getElementById("password2").placeholder = "Contraseña De Nuevo";
+        document.getElementById("dataProcessingInfo").innerHTML = `
+        Para obtener información detallada sobre las actividades de procesamiento de datos personales
+        en el marco de los servicios de conexión inalámbrica,
+        consulte nuestro
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          title="Tooltip"
+          class="btn btn-link"
+          >Texto de Iluminación</a>
+        .
+      `;
+      document.getElementById("modal1Header").textContent = "Texto de iluminación";
+      document.getElementById('modalButtonClose').textContent = 'cerca';
+      document.getElementById('modalButtonUnderstand').textContent = 'Entiendo';
+
+      document.getElementById('termsOfUse').textContent = 'Términos de Uso';
+      document.getElementById('consentText').textContent = 'Texto de Consentimiento Explícito KVKK';
+      document.getElementById('agreementLabel').childNodes[2].textContent = ' y ';
+      document.getElementById('agreementLabel').childNodes[4].textContent = ' he leído y acepto.';
+      document.getElementById('error-message').textContent = 'Por favor, acepte los Términos de Uso y el Formulario de Consentimiento de GDPR.';
+
+      
+      document.getElementById('registerButton1').textContent = 'Registrarse';
+      document.getElementById('existingAccountText1').textContent = '¿Ya tienes una cuenta?';
+      document.getElementById('signIn').textContent = 'Iniciar sesión';
+
+//registrarse al final de la página
+//inicio de la página de inicio de sesión
+      document.getElementById("girisYap").textContent = "Acceso";
+        document.getElementById("ahg").textContent = "¡Qué gusto verte de nuevo!";
+        document.getElementById("phoneNumber2").placeholder = "Número de teléfono";
+        document.getElementById("password3").placeholder = "Contraseña";
+
+        document.getElementById('registerButton2').textContent = 'Conectar a internet';
+      document.getElementById('existingAccountText2').textContent = '¿Aún no tienes una cuenta?';
+      document.getElementById('signUp').textContent = 'Crear una cuenta';
+
+
+      document.getElementById('rememberMeLabel').textContent = 'Recuérdame';
+      document.getElementById('forgotPasswordLink').textContent = '¿Olvidaste tu contraseña?';
+
+//final de la página de inicio
+        break; 
+
+        case "de":
+       //Deutscher Inhalt
+       //Hauptteil beginnt
+        document.getElementById("hesapOlustur").textContent = "Benutzerkonto erstellen";
+        document.getElementById("hg").textContent = "Willkommen im Klub!";
+        //Hauptteil endet
+        //Anmeldung starten
+        document.getElementById("name").placeholder = "Name";
+        document.getElementById("surname").placeholder = "Nachname";
+        document.getElementById("phoneNumber1").placeholder = "Telefonnummer";
+        document.getElementById("floatingSelectGrid").options[0].textContent = "Geschlecht";
+        document.getElementById("floatingSelectGrid").options[1].textContent = "Frau";
+        document.getElementById("floatingSelectGrid").options[2].textContent = "Männlich";
+        document.getElementById("floatingSelectGrid").options[3].textContent = "Ich Möchte Nicht Näher Darauf Eingehen";
+        document.getElementById("key").placeholder = "Schlüssel";
+        document.getElementById("password1").placeholder = "Passwort";
+        document.getElementById("password2").placeholder = "Passwort Erneut";
+        document.getElementById("dataProcessingInfo").innerHTML = `
+        Für detaillierte Informationen zu den Aktivitäten der Verarbeitung personenbezogener Daten
+        im Rahmen von drahtlosen Netzwerkverbindungsdiensten,
+        lesen Sie bitte unseren
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          title="Tooltip"
+          class="btn btn-link"
+          >Aufklärungstext</a>
+        .
+      `;
+      document.getElementById("modal1Header").textContent = "Aufklärungstext";
+      document.getElementById('modalButtonClose').textContent = 'schließen';
+      document.getElementById('modalButtonUnderstand').textContent = 'Ich verstehe';
+
+      document.getElementById('termsOfUse').textContent = 'Nutzungsbedingungen';
+      document.getElementById('consentText').textContent = 'KVKK Einwilligungserklärung';
+      document.getElementById('agreementLabel').childNodes[2].textContent = ' und ';
+      document.getElementById('agreementLabel').childNodes[4].textContent = ' habe ich gelesen und akzeptiert.';
+      document.getElementById('error-message').textContent = 'Bitte akzeptieren Sie die Nutzungsbedingungen und das DSGVO-Einwilligungsformular.';
+
+
+      document.getElementById('registerButton1').textContent = 'Registrieren';
+      document.getElementById('existingAccountText1').textContent = 'Haben Sie bereits ein Konto?';
+      document.getElementById('signIn').textContent = 'Einloggen';
+
+//Anmeldung beenden
+//Einloggen starten
+      document.getElementById("girisYap").textContent = "Anmeldung";
+        document.getElementById("ahg").textContent = "Schön dich wieder zu sehen!";
+        document.getElementById("phoneNumber2").placeholder = "Telefonnummer";
+        document.getElementById("password3").placeholder = "Passwort";
+
+        document.getElementById('registerButton2').textContent = 'Mit dem Internet verbinden';
+      document.getElementById('existingAccountText2').textContent = 'Sie haben noch kein Konto?';
+      document.getElementById('signUp').textContent = 'Benutzerkonto erstellen';
+
+      document.getElementById('rememberMeLabel').textContent = 'Erinnere dich an mich';
+      document.getElementById('forgotPasswordLink').textContent = 'Passwort vergessen?';
+//Einloggen, fertig
+        break; 
+
+        case "ar":
+//المحتوى العربي
+//بداية القسم الرئيسي
+        document.getElementById("hesapOlustur").textContent = "إنشاء حساب";
+        document.getElementById("hg").textContent = "مرحبا في النادي!";
+        //نهاية الجزء الرئيسي
+        //بدء التسجيل
+        document.getElementById("name").placeholder = "اسم";
+        document.getElementById("surname").placeholder = "اسم العائلة";
+        document.getElementById("phoneNumber1").placeholder = "رقم الهاتف";
+        document.getElementById("floatingSelectGrid").options[0].textContent = "جنس";
+        document.getElementById("floatingSelectGrid").options[1].textContent = "امرأة";
+        document.getElementById("floatingSelectGrid").options[2].textContent = "ذكر";
+        document.getElementById("floatingSelectGrid").options[3].textContent = "لا أريد أن أحدد";
+        document.getElementById("key").placeholder = "المفتاح";
+        document.getElementById("password1").placeholder = "كلمة المرور";
+        document.getElementById("password2").placeholder = "أدخل كلمة السر مرة أخرى";
+        document.getElementById("dataProcessingInfo").innerHTML = `
+        لمزيد من المعلومات التفصيلية حول أنشطة معالجة البيانات الشخصية
+        في إطار خدمات الاتصال بالشبكة اللاسلكية،
+        يرجى الاطلاع على
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          title="Tooltip"
+          class="btn btn-link"
+          >نص التنوير</a>
+        .
+      `;
+      document.getElementById("modal1Header").textContent = "نص التنوير";
+      document.getElementById('modalButtonClose').textContent = 'أغلق';
+      document.getElementById('modalButtonUnderstand').textContent = 'أفهم';
+
+      document.getElementById('termsOfUse').textContent = 'شروط الاستخدام';
+      document.getElementById('consentText').textContent = 'نص الموافقة الصريحة لقانون حماية البيانات الشخصية';
+      document.getElementById('agreementLabel').childNodes[2].textContent = ' و ';
+      document.getElementById('agreementLabel').childNodes[4].textContent = ' قرأت وقبلت.';
+      document.getElementById('error-message').textContent = 'يرجى قبول شروط الاستخدام ونموذج موافقة GDPR.';
+
+
+      document.getElementById('registerButton1').textContent = 'سجل';
+      document.getElementById('existingAccountText1').textContent = 'هل لديك حساب بالفعل؟';
+      document.getElementById('signIn').textContent = 'تسجيل الدخول';
+
+
+//إنهاء التسجيل
+//تسجيل الدخول ابدأ
+      document.getElementById("girisYap").textContent = "تسجيل الدخول";
+        document.getElementById("ahg").textContent = "رؤيتك من جديد شيء جميل!";
+        document.getElementById("phoneNumber2").placeholder = "رقم الهاتف";
+        document.getElementById("password3").placeholder = "كلمة المرور";
+
+        document.getElementById('registerButton2').textContent = 'اتصل بالإنترنت';
+      document.getElementById('existingAccountText2').textContent = 'ليس لديك حساب حتى الآن؟';
+      document.getElementById('signUp').textContent = 'إنشاء حساب';
+
+      document.getElementById('rememberMeLabel').textContent = 'تذكرني';
+      document.getElementById('forgotPasswordLink').textContent = 'نسيت كلمة المرور؟';
+
+      //إنهاء تسجيل الدخول
+        break; 
+
+
+         default:
+      // Varsayılan dil (Türkçe)
+      //tr icerikler
+       
+         //giris basla
+         document.getElementById("hesapOlustur").textContent = "Hesap Oluştur";
+        document.getElementById("hg").textContent = "Aramıza hoşgeldin!";
+        //giris bitis
+        //hesap olustur ekranı basla
+        document.getElementById("name").placeholder = "Ad";
+        document.getElementById("surname").placeholder = "Soyad";
+        document.getElementById("phoneNumber1").placeholder = "Telefon Numarası";
+        document.getElementById("floatingSelectGrid").options[0].textContent = "Cinsiyet";
+        document.getElementById("floatingSelectGrid").options[1].textContent = "Kadın";
+        document.getElementById("floatingSelectGrid").options[2].textContent = "Erkek";
+        document.getElementById("floatingSelectGrid").options[3].textContent = "Belirtmek İstemiyorum";
+        document.getElementById("key").placeholder = "Anahtar";
+        document.getElementById("password1").placeholder = "Şifre";
+        document.getElementById("password2").placeholder = "Şifre Tekrar";
+        document.getElementById("dataProcessingInfo").innerHTML = `
+        Kablosuz ağ bağlantısı hizmeti kapsamındaki kişisel veri
+        işleme faaliyetleri hakkında detaylı bilgi için
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          title="Tooltip"
+          class="btn btn-link"
+        >Aydınlanma Metnimizi</a>
+        inceleyebilirsiniz.
+      `;
+      document.getElementById("modal1Header").textContent = "Aydınlanma Metni";
+
+
+      document.getElementById('termsOfUse').textContent = 'Kullanım Sözleşmesi';
+      document.getElementById('consentText').textContent = 'KVKK Açık Rıza Metni';
+      document.getElementById('agreementLabel').childNodes[2].textContent = ' ve ';
+      document.getElementById('agreementLabel').childNodes[4].textContent = ' ni okudum kabul ediyorum.';
+      document.getElementById('error-message').textContent = 'Lütfen Kullanım Sözleşmesi ve KVKK Açık Rıza Metni\'ni kabul edin.'; // Default to Turkish
+
+      document.getElementById('registerButton1').textContent = 'Kayıt Ol';
+      document.getElementById('existingAccountText1').textContent = 'Zaten bir hesabınız var mı?';
+      document.getElementById('signIn').textContent = 'Giriş Yap';
+        // hesap oluştur ekranı bitiş
+        //giriş yap ekranı başla
+        document.getElementById("girisYap").textContent = "Giriş Yap";
+        document.getElementById("ahg").textContent = "Seni tekrar görmek güzel!";
+        document.getElementById("phoneNumber2").placeholder = "Telefon Numarası";
+        document.getElementById("password3").placeholder = "Şifre";
+
+        document.getElementById('registerButton2').textContent = 'İnternete Bağlan';
+      document.getElementById('existingAccountText2').textContent = 'Henüz bir hesabınız yok mu?';
+      document.getElementById('signUp').textContent = 'Hesap Oluştur';
+
+      document.getElementById('rememberMeLabel').textContent = 'Beni Hatırla';
+      document.getElementById('forgotPasswordLink').textContent = 'Şifremi Unuttum?';
+
+        //giriş yap ekranı bitiş
+
+       
+      
+      break;
+      }
+
+
+    });
+
+
+
+    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="main.js"></script>
+  </body>
+</html>
